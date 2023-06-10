@@ -1,0 +1,236 @@
+CREATE TABLE Login (
+username VARCHAR2(10) PRIMARY KEY NOT NULL,
+password VARCHAR2(10) NOT NULL,
+role VARCHAR2(10) NOT NULL CHECK (role IN ('admin', 'user','society'))
+);
+
+
+CREATE TABLE society (
+  s_name VARCHAR(50) primary key,
+  s_mentor VARCHAR(50) NOT NULL,
+  s_president VARCHAR(50) NOT NULL
+  );
+
+create Table record (
+r_id INT PRIMARY KEY,
+s_name varchar(50) NOT NULL,
+item_name varchar(50),
+quantity varchar(50),
+  FOREIGN KEY (s_name) REFERENCES society(s_name)
+)
+
+
+
+
+CREATE TABLE society_members (
+  s_name VARCHAR(50),
+  member_name VARCHAR(50) NOT NULL,
+  member_role VARCHAR(50),
+  PRIMARY KEY (s_name, member_name),
+  FOREIGN KEY (s_name) REFERENCES society(s_name)
+);
+
+
+CREATE TABLE event (
+  event_name VARCHAR(50) primary key,
+  s_name varchar2(50) NOT NULL,
+  start_date DATE NOT NULL,
+  end_date DATE NOT NULL,
+  FOREIGN KEY (s_name) REFERENCES society(s_name)
+);
+
+
+CREATE TABLE requests (
+  request_id INT PRIMARY KEY,
+  s_name VARCHAR(25) NOT NULL,
+  item_name VARCHAR(255) NOT NULL,
+  quantity_requested INT NOT NULL,
+  approval_status VARCHAR(25) dafault 'pending',
+  FOREIGN KEY (s_name) REFERENCES society(s_name)
+);
+
+
+CREATE TABLE return_request (
+  returned_id INT PRIMARY KEY,
+  s_name VARCHAR(25) NOT NULL,
+  item_name VARCHAR(255) NOT NULL,
+  quantity_returned INT NOT NULL,
+  approval_status VARCHAR(25) DEFAULT 'pending',
+  FOREIGN KEY (s_name) REFERENCES society(s_name)
+);
+
+
+
+
+select * from return_request
+
+
+
+CREATE OR REPLACE TRIGGER supplychain
+AFTER UPDATE ON requests
+FOR EACH ROW
+WHEN (OLD.approval_status = 'pending' AND NEW.approval_status = 'accepted')
+DECLARE 
+    iId INTEGER;
+    sId INTEGER;
+    inventId INTEGER;
+    quant INTEGER;
+    bID INTEGER;
+BEGIN
+    SELECT item_id INTO iId FROM item WHERE item_name = :new.item_name;
+    SELECT section_id INTO sId FROM item WHERE item_name = :new.item_name;
+    SELECT inventory_id INTO inventId FROM inventory WHERE item_id = iId AND section_id = sId;
+    SELECT quantity INTO quant FROM inventory WHERE inventory_id = inventId;
+    SELECT MAX(borrow_id) + 1 into bID FROM borrowed_items;
+
+    IF (:new.quantity_requested < quant) THEN
+        INSERT INTO borrowed_items (borrow_id, req_id, inventory_id, quantity, borrowed_date)
+        VALUES (bID, :new.request_id, inventId, :new.quantity_requested, SYSDATE);
+
+        UPDATE inventory SET quantity = quantity - :new.quantity_requested WHERE inventory_id = inventId;
+
+        INSERT INTO record (r_id, s_name, item_name, quantity)
+        VALUES (:new.request_id, :new.s_name, :new.item_name, :new.quantity_requested);
+
+    ELSE
+        UPDATE requests SET approval_status = 'pending' WHERE request_id = :new.request_id; 
+    END IF;    
+END;
+/
+
+
+ALTER TABLE borrowed_items 
+ADD FOREIGN KEY (returned_id) REFERENCES return_request(returned_id);
+
+select * from borrowed_items 
+
+drop trigger supplychain
+
+CREATE OR REPLACE TRIGGER request_id_trigger
+BEFORE INSERT ON requests
+FOR EACH ROW
+DECLARE
+  max_request_id NUMBER;
+BEGIN
+  SELECT MAX(request_id) INTO max_request_id FROM requests;
+  :new.request_id := max_request_id + 1;
+END;
+
+
+
+
+
+
+
+CREATE TABLE borrowed_items (
+  borrow_id INT PRIMARY KEY,
+  returned_id INT NULL,
+  req_id INT NULL,
+  inventory_id INT NOT NULL,
+  quantity INT NOT NULL,
+  borrowed_date DATE NOT NULL,
+  returned_date DATE,
+  FOREIGN KEY (req_id) REFERENCES requests(request_id),
+  FOREIGN KEY (inventory_id) REFERENCES inventory(inventory_id)
+);
+
+select * from borrowed_items 
+
+ALTER TABLE borrowed_items 
+
+CREATE TABLE section (
+  section_id INT PRIMARY KEY,
+  section_name VARCHAR(255) NOT NULL
+);
+
+
+CREATE TABLE item (
+  item_id INT PRIMARY KEY,
+  item_name VARCHAR(255) NOT NULL,
+  section_id INT NOT NULL,
+  FOREIGN KEY (section_id) REFERENCES section(section_id)
+);
+SELECT bi.borrow_id, bi.req_id,  i.inventory_id, i.item_id, it.item_name, s.section_id, s.section_name, bi.quantity, bi.borrowed_date, bi.returned_date
+FROM borrowed_items bi
+JOIN inventory i ON bi.inventory_id = i.inventory_id
+JOIN item it ON i.item_id = it.item_id
+JOIN section s ON i.section_id = s.section_id;
+
+
+
+CREATE TABLE inventory (
+  inventory_id INT PRIMARY KEY,
+  item_id INT NOT NULL,
+  section_id INT NOT NULL,
+  quantity INT NOT NULL,
+  FOREIGN KEY (item_id) REFERENCES item(item_id),
+  FOREIGN KEY (section_id) REFERENCES section(section_id)
+);
+create table tempNotify(
+itemid int primary key,
+secid int not null
+)
+
+
+
+
+
+
+CREATE OR REPLACE FUNCTION get_total_quantity
+RETURN INT
+IS
+  total_quantity INT;
+BEGIN
+  SELECT SUM(quantity) INTO total_quantity
+  FROM inventory;
+  RETURN total_quantity;
+END;
+
+
+
+
+CREATE OR REPLACE Trigger notify
+after insert or update of quantity on inventory
+for each row 
+begin 
+if :new.quantity<10 then insert into tempNotify values(:new.item_id,:new.section_id);
+end if;
+end;
+
+
+
+
+CREATE OR REPLACE FUNCTION checkNotify RETURN NUMBER AS
+  v_rows_affected NUMBER;
+BEGIN
+  DELETE FROM tempNotify
+  WHERE itemid IN (SELECT item_id FROM inventory WHERE quantity > 10);
+
+  v_rows_affected := SQL%ROWCOUNT;
+
+  RETURN v_rows_affected;
+END;
+
+
+CREATE OR REPLACE TRIGGER return_id_trigger
+BEFORE INSERT ON return_request
+FOR EACH ROW
+DECLARE
+  max_returned_id NUMBER;
+BEGIN
+  SELECT MAX(returned_id) INTO max_returned_id FROM return_request;
+  :new.returned_id := max_returned_id + 1;
+END;
+
+
+
+CREATE OR REPLACE TRIGGER request_id_trigger
+BEFORE INSERT ON requests
+FOR EACH ROW
+DECLARE
+  max_request_id NUMBER;
+BEGIN
+  SELECT MAX(request_id) INTO max_request_id FROM requests;
+  :new.request_id := max_request_id + 1;
+END;
+

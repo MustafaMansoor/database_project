@@ -1,0 +1,316 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A304213D-6D21-4CD3-98A0-5339CC36A61D}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>finalproject</RootNamespace>
+    <AssemblyName>finalproject</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Oracle.ManagedDataAccess, Version=4.122.18.3, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="additem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="additem.Designer.cs">
+      <DependentUpon>additem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="addsection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="addsection.Designer.cs">
+      <DependentUpon>addsection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="addTempAdmin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="addTempAdmin.Designer.cs">
+      <DependentUpon>addTempAdmin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="adminviewrecord.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="adminviewrecord.Designer.cs">
+      <DependentUpon>adminviewrecord.cs</DependentUpon>
+    </Compile>
+    <Compile Include="connectionclass.cs" />
+    <Compile Include="createSection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="createSection.Designer.cs">
+      <DependentUpon>createSection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Deleteitem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Deleteitem.Designer.cs">
+      <DependentUpon>Deleteitem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form2.Designer.cs">
+      <DependentUpon>Form2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="generatesocietyreport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="generatesocietyreport.Designer.cs">
+      <DependentUpon>generatesocietyreport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="inertnewitem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="inertnewitem.Designer.cs">
+      <DependentUpon>inertnewitem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="manageInventory.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="manageInventory.Designer.cs">
+      <DependentUpon>manageInventory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReturnItems.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ReturnItems.Designer.cs">
+      <DependentUpon>ReturnItems.cs</DependentUpon>
+    </Compile>
+    <Compile Include="superreturnrequest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="superreturnrequest.Designer.cs">
+      <DependentUpon>superreturnrequest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="updateitem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="updateitem.Designer.cs">
+      <DependentUpon>updateitem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="updateSection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="updateSection.Designer.cs">
+      <DependentUpon>updateSection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="itemrequest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="itemrequest.Designer.cs">
+      <DependentUpon>itemrequest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="memberinfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="memberinfo.Designer.cs">
+      <DependentUpon>memberinfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="society record.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="society record.Designer.cs">
+      <DependentUpon>society record.cs</DependentUpon>
+    </Compile>
+    <Compile Include="society.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="society.Designer.cs">
+      <DependentUpon>society.cs</DependentUpon>
+    </Compile>
+    <Compile Include="society_Inventory.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="society_Inventory.Designer.cs">
+      <DependentUpon>society_Inventory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="superrequest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="superrequest.Designer.cs">
+      <DependentUpon>superrequest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TrackRequest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TrackRequest.Designer.cs">
+      <DependentUpon>TrackRequest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="user.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="user.Designer.cs">
+      <DependentUpon>user.cs</DependentUpon>
+    </Compile>
+    <Compile Include="admin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="admin.Designer.cs">
+      <DependentUpon>admin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="additem.resx">
+      <DependentUpon>additem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="addsection.resx">
+      <DependentUpon>addsection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="addTempAdmin.resx">
+      <DependentUpon>addTempAdmin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="adminviewrecord.resx">
+      <DependentUpon>adminviewrecord.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="createSection.resx">
+      <DependentUpon>createSection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Deleteitem.resx">
+      <DependentUpon>Deleteitem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form2.resx">
+      <DependentUpon>Form2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="generatesocietyreport.resx">
+      <DependentUpon>generatesocietyreport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="inertnewitem.resx">
+      <DependentUpon>inertnewitem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="manageInventory.resx">
+      <DependentUpon>manageInventory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReturnItems.resx">
+      <DependentUpon>ReturnItems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="superreturnrequest.resx">
+      <DependentUpon>superreturnrequest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="updateitem.resx">
+      <DependentUpon>updateitem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="updateSection.resx">
+      <DependentUpon>updateSection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="itemrequest.resx">
+      <DependentUpon>itemrequest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="memberinfo.resx">
+      <DependentUpon>memberinfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="society record.resx">
+      <DependentUpon>society record.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="society.resx">
+      <DependentUpon>society.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="society_Inventory.resx">
+      <DependentUpon>society_Inventory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="superrequest.resx">
+      <DependentUpon>superrequest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TrackRequest.resx">
+      <DependentUpon>TrackRequest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="user.resx">
+      <DependentUpon>user.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="admin.resx">
+      <DependentUpon>admin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\3bbeca87ed7d0f901a57b5f4a2e6a37b.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\download.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\stretched-1366-768-1081121.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\2f4f4f.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\front.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
